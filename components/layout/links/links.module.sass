@@ -1,0 +1,37 @@
+@import  '../../../styles/_theme'
+
+
+    
+.container
+    display: flex
+    width: 43rem
+    justify-content: space-between
+
+.custom_flex_1
+    flex: 1
+
+.link
+    text-align: center
+    font-size: 1.3rem
+    font-weight: 800
+    color: $white
+    line-height: 2.5rem
+    transition: color 0.3s ease
+    &:hover
+        color: $orange
+
+
+// Movil
+@media (max-width: 500px)
+
+    .custom_flex_1
+        flex: 0
+    
+
+    .container
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+        width: auto
+        height: 14rem
+        

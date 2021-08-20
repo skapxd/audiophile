@@ -1,0 +1,171 @@
+@import '../../../styles/_theme'
+
+@mixin stack_image_and_text
+    .bg
+        height: 64rem
+
+    .container
+        display: flex
+        flex-direction: column
+        align-items: center
+
+    .head_phone
+        position: absolute
+        background: $dark_bg
+        opacity: 0.8
+        z-index: 1
+
+    .new_products
+        align-items: center
+        z-index: 100
+
+.bg
+    background: $dark_bg
+    width: 100%
+    display: flex
+    flex-direction: row
+    justify-content: center
+    border-radius: 0 0 0.8rem 0.8rem
+
+.text_1
+    z-index: 100
+    color: $white
+    letter-spacing: 1rem
+    text-transform: uppercase
+    line-height: 1.9rem
+    opacity: 0.5
+    font-weight: normal
+    font-size: 1.4rem
+    margin-bottom: 3.5rem
+
+.text_2
+    z-index: 100
+    color: $white
+    font-weight: bold
+    font-size: 5.6rem
+    line-height: 5.8rem
+    letter-spacing: 0.2rem
+    text-transform: uppercase
+    margin-bottom: 3.5rem
+
+.text_3
+    z-index: 100
+    max-width: 35rem
+    line-height: 2.5rem
+    font-size: 1.5rem
+    font-weight: 200
+    color: $white
+    opacity: 0.75
+    margin-bottom: 4.5rem
+
+.button
+    z-index: 100
+    display: flex
+    justify-content: center
+    align-items: center
+    height: 5rem
+    width: 16rem
+    background: $orange
+    color: $white
+    font-size: 1.3rem
+    letter-spacing: 0.1rem
+    text-transform: uppercase
+    font-weight: bold
+    transition: background 0.3s ease
+    &:hover
+        background: $orange-act
+
+// Desktop
+@media (min-width: 769px)
+
+    .container
+        @include margin_desktop_and_tablet
+        width: 111rem
+        display: flex
+        justify-content: space-between
+
+    .new_products
+        margin-top: 13rem
+        display: flex
+        flex-direction: column
+
+    .head_phone
+        height: 63.8rem
+        width: 70.9rem
+        position: relative
+
+    
+    .text_3
+        // font-size: 1.5rem
+        text-align: center
+
+// 1000px
+@media (max-width: 1200px)
+    @include stack_image_and_text
+
+// Tablet 
+@media (max-width: 768px)
+    @include stack_image_and_text
+
+    .container
+        @include margin_desktop_and_tablet
+        width: 100%
+
+    .head_phone
+        height: 90vw
+        max-height: 63.8rem
+        width: 100%
+        max-width: 70.9rem
+
+
+    .new_products
+        margin-top: 13rem
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+
+    .text_3
+        text-align: center
+
+// Movil
+@media (max-width: 499px)
+    
+
+    .container
+        @include margin_movil
+        width: 100%
+
+        
+
+
+    .head_phone
+        margin-top: 12rem
+        height: 89.99vw
+        width: 100%
+        z-index: 1
+        overflow: hidden
+
+    // .head_phone
+    //     height: 90vw
+    //     max-height: 63.8rem
+    //     width: 100%
+    //     max-width: 70.9rem
+
+    .new_products
+        margin-top: 13rem
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+
+    .text_1
+        font-size: 1.4rem
+
+    .text_2
+        font-size: 3.6rem
+
+    .text_3
+        font-size: 1.5rem
+        text-align: center
+

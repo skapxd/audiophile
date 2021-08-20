@@ -1,0 +1,18 @@
+@import '../../../styles/_theme'
+
+.social_icons
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    // height: 2.5rem
+    width: 11rem
+
+.icon
+    margin: 1rem 0 
+    cursor: pointer
+    & .path
+        transition: fill 0.3s ease
+
+    &:hover
+        & .path
+            fill: $orange

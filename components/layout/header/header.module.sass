@@ -1,0 +1,66 @@
+@import '../../../styles/_theme'
+
+.custom_flex_1
+    flex: 1
+    
+.custom_flex_2
+    flex: 2
+
+.header
+    background: $dark_bg
+    display: flex
+    flex-direction: row
+    justify-content: center
+    height: 9.5rem
+
+.container
+    @include margin_desktop_and_tablet    
+    width: 111rem
+    display: flex
+    flex-direction: row
+    align-items: center
+    border-bottom: 0.1rem solid $grey
+    
+
+.shop_card
+    cursor: pointer
+
+// Tablet
+@media (max-width: 768px) and (min-width: 376px)
+
+    .link
+        display: none
+
+    .menu_icon
+        display: block 
+        width: 1.6rem
+        height: 1.5rem
+        margin-right: 4rem
+
+// Movil
+@media (max-width: 375px)
+
+    .container
+        margin: 0 2rem
+        justify-content: space-between
+
+    
+    .menu_icon
+        display: block 
+        width: 1.6rem
+        height: 1.5rem
+    
+    .link
+        display: none
+
+    
+    .custom_flex_1
+        display: none
+
+    .custom_flex_2
+        display: none
+
+    .logo
+        margin: 0 auto
+        width: 100%
+

@@ -1,0 +1,102 @@
+@import '../../../styles/_theme'
+
+.footer
+    background: $dark_bg
+    display: flex
+    justify-content: center
+    align-items: center
+
+.logo
+    width: 14.3rem
+    height: 2.5rem
+    
+.text,
+.copy
+    font-size: 1.5rem
+    letter-spacing: 0.05rem
+    color: $white
+    opacity: 0.8
+    line-height: 2.5rem
+    margin: 1.6rem 0
+
+
+// Desktop
+@media (min-width: 769px)
+
+    .custom_flex_box
+        flex: 1
+
+    .footer
+        background: $dark_bg
+        padding-top: 7.5rem
+        padding-bottom: 4.5rem
+        display: flex
+        justify-content: center
+        align-items: center
+
+    .container
+        @include margin_desktop_and_tablet
+        width: 111rem
+        display: flex
+        flex-direction: column
+
+    .logo_and_links
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        
+
+    .text_and_social
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        align-items: flex-end
+
+    .text
+        width: 54rem
+        margin-top: 3rem
+        font-weight: 200
+
+
+// Tablet
+@media (max-width: 768px) and (min-width: 500px)
+
+    .logo
+        margin-bottom: 1.5rem
+
+    .footer
+        height: 36.5rem
+
+    .logo_and_links
+        display: flex
+        flex-direction: column
+        // background: red
+
+    .container
+        @include margin_desktop_and_tablet
+        
+    
+// Movil
+@media (max-width: 499px)
+
+    .footer
+        padding: 4rem 0 
+        
+    .container
+        @include margin_movil
+        justify-content: center
+
+    .logo
+        margin: 1rem auto
+    
+    .logo_and_links
+        display: flex
+        flex-direction: column
+
+    .logo_and_links
+        display: flex
+        flex-direction: column
+        justify-content: center
+    
+    .links
+        margin-top: 2rem
