@@ -57,6 +57,7 @@
     color: $white
     opacity: 0.75
     margin-bottom: 4.5rem
+    text-align: left 
 
 .button
     z-index: 100
@@ -96,13 +97,16 @@
 
     
     .text_3
-        // font-size: 1.5rem
-        text-align: center
+        text-align: left
 
 // 1000px
 @media (max-width: 1200px)
     @include stack_image_and_text
 
+    .text_3
+        text-align: center
+
+        
 // Tablet 
 @media (max-width: 768px)
     @include stack_image_and_text

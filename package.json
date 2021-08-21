@@ -5,11 +5,14 @@
   "scripts": {
     "dev": "next dev ",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "push-heroku": "git push heroku main",
+    "deploy": "run-s build push-heroku"
   },
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "next": "^11.0.0",
+    "npm-run-all": "^4.1.5",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "sass": "^1.37.5"
