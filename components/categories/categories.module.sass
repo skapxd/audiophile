@@ -1,50 +1,69 @@
 @import '../../styles/_theme'
 
-// Desktop
-@media (min-width: 769px )
 
-    .container 
-        @include margin_desktop_and_tablet
-        margin-top: 15rem
-        margin-bottom: 10rem
-        display: flex
-        justify-content: center
 
-    .list_categories
-        width: 111rem
-        display: flex
-        flex-direction: row
-        justify-content: space-between
+// // Desktop
+// @media (min-width: 769px )
+
+//     .container 
+//         @include margin_desktop_and_tablet
+//         display: flex
+//         justify-content: center
+
+//     .list_categories
+//         width: 100%
+//         // gap: 1rem
+//         max-width: 111rem
+//         display: flex
+//         flex-direction: row
+//         justify-content: space-between
+//         align-items: center
     
+
+// // Tablet
+// @media (max-width: 768px)
+    
+//     .container 
+//         @include margin_desktop_and_tablet
+//         margin-top: 5rem
+//         display: flex
+//         justify-content: center
+
+//     .list_categories
+//         max-width: 111rem
+//         display: flex
+//         flex-direction: column
+//         align-items: center
+    
+// // Movil
+// @media (max-width: 499px)
+    
+//     .container 
+//         @include margin_desktop_and_tablet
+//         margin-top: 5rem
+//         display: flex
+//         justify-content: space-between
+
+//     .list_categories
+//         width: 111rem
+//         width: 100%
+//         display: flex
+//         flex-direction: column
+//         justify-content: center
+//         align-items: center
+    
+
+.container
+
+.list_categories
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    gap: 1rem
 
 // Tablet
-@media (max-width: 768px)
-    
-    .container 
-        @include margin_desktop_and_tablet
-        margin-top: 5rem
-        display: flex
-        justify-content: center
+@media (min-width: 768px)
 
     .list_categories
-        width: 111rem
-        display: flex
-        flex-direction: column
-        align-items: center
-    
-// Movil
-@media (max-width: 499px)
-    
-    .container 
-        @include margin_desktop_and_tablet
-        margin-top: 5rem
-        display: flex
-        justify-content: center
-
-    .list_categories
-        width: 111rem
-        display: flex
-        flex-direction: column
-        justify-content: center
-        align-items: center
-    
+        flex-direction: row

@@ -9,7 +9,7 @@ export default function Links() {
                 <a className={Style.link}>HOME</a>
             </Link>
 
-            <Link href='/headphone'
+            <Link href='/headphones'
             >
                 <a className={Style.link}>HEADPHONE</a>
             </Link>

@@ -1,0 +1,136 @@
+@import '../../styles/_theme'
+
+// Desktop
+@media (min-width: 1200px)
+
+    .best
+        display: flex
+        flex-direction: row
+        max-width: 111rem
+        height: 59rem
+
+        &_text
+            display: flex
+            flex-direction: column
+            margin-right: 3rem
+            justify-content: center
+            flex: 1
+
+            &_br_2
+                display: none
+
+            &_title
+                margin-bottom: 3rem
+                font-family: Manrope
+                font-style: normal
+                font-weight: bold
+                font-size: 4rem
+                line-height: 4.4rem
+                letter-spacing: 0.15rem
+                text-transform: uppercase
+                color: $dark_bg
+                & span
+                    color: $orange
+
+            &_paragraph
+                font-style: normal
+                font-weight: 600
+                font-size: 1.5rem
+                line-height: 2.5rem
+                color: $dark_bg
+                opacity: 0.7
+                max-width: 44rem
+
+        &_img
+            width: 100%
+            max-width: 54rem
+            height: 100%
+            max-height: 59rem
+            border-radius: 0.8rem
+            object-fit: cover
+
+// Tablet
+@media (max-width: 1199px)
+
+    .best
+        display: flex
+        flex-direction: column
+        flex-direction: column-reverse
+        // margin-bottom: 5rem
+        // margin-top: 5rem
+
+        &_text
+            display: flex
+            flex-direction: column
+            justify-content: center
+            align-items: center
+            flex: 1
+
+            &_br_1
+                display: none
+
+            &_title
+                text-align: center
+                margin-top: 7rem
+                margin-bottom: 3rem
+                font-family: Manrope
+                font-style: normal
+                font-weight: bold
+                font-size: 4rem
+                line-height: 4.4rem
+                letter-spacing: 0.15rem
+                text-transform: uppercase
+                color: $dark_bg
+                & span
+                    color: $orange
+
+            &_paragraph
+                text-align: center
+                font-style: normal
+                font-weight: 600
+                font-size: 1.5rem
+                line-height: 2.5rem
+                color: $dark_bg
+                opacity: 0.7
+                max-width: 58rem
+
+        &_img
+            width: 100%
+            // max-width: 54rem
+            height: 100%
+            max-height: 30rem
+            border-radius: 0.8rem
+            object-fit: cover
+            // object-position: 0 -60px
+
+// 790px
+@media (max-width: 499px)
+
+    
+    .best
+        margin-bottom: 5rem
+        &_img
+            width: 100%
+            height: 100%
+            max-height: 30rem 
+            border-radius: 0.8rem
+            object-fit: cover
+            object-position: 0 0
+
+        &_text
+            
+            &_title
+                font-style: normal
+                font-weight: bold
+                font-size: 2.8rem
+                line-height: 3.8rem
+                text-align: center
+                letter-spacing: 0.1rem
+                text-transform: uppercase
+                color: $dark_bg
+
+            &_br_1
+                display: none
+                
+            &_br_2
+                display: none

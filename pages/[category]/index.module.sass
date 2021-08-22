@@ -1,0 +1,30 @@
+@import '../../styles/_theme'
+
+.container
+    display: flex
+    flex-direction: column
+    align-items: center
+
+    &_products
+        display: flex
+        flex-direction: column
+        gap: 10rem
+        align-items: center
+        margin: 5rem 0
+
+.categories
+    margin-top: 10rem
+    width: 100%
+
+
+.best
+    @include margin_movil
+    margin-top: 5rem
+    margin-bottom: 5rem
+
+// Tablet
+@media (min-width: 1200px)
+    .best
+        @include margin_desktop_and_tablet
+        margin-top: 10rem
+        margin-bottom: 10rem

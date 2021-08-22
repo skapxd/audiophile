@@ -10,20 +10,19 @@ export default function Categories() {
                 <Category
                     name='headphones'
                     image='/categories/headphones.png'
-                    link=''
+                    link='headphones'
                 />
 
                 <Category
                     name='speakers'
                     image='/categories/speakers.png'
-                    link=''
+                    link='speakers'
                 />
-
 
                 <Category
                     name='earphones'
                     image='/categories/earphones.png'
-                    link=''
+                    link='earphones'
                 />
             </div>
         </div>

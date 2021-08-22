@@ -1,0 +1,140 @@
+@import  '../../styles/_theme'
+
+// Mobile first
+.container,
+.container_reverse
+    @include margin_movil
+    border-radius: 0.8rem
+    display: flex
+    flex-direction: column
+    align-items: center
+
+    &_img
+        background: $category_card_bg
+        width: 100%
+
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        border-radius: 0.8rem
+
+        & img
+            object-fit: cover
+            margin-top: 4rem
+            margin-bottom: 5rem
+            max-width: 24rem
+            width: 100%
+
+.new_product
+    margin-top: 3rem
+
+    font-style: normal
+    font-weight: normal
+    font-size: 1.4rem
+    line-height: 1.9rem
+    text-align: center
+    letter-spacing: 1.0rem
+    text-transform: uppercase
+    color: $orange
+
+.info
+    display: flex
+    flex-direction: column
+    align-items: center
+
+    &_name
+        margin-top: 2rem
+
+        font-style: normal
+        font-weight: bold
+        font-size: 2.8rem
+        line-height: 3.8rem
+        text-align: center
+        letter-spacing: 0.1rem
+        text-transform: uppercase
+        color: $dark_bg
+
+    &_description
+        margin-top: 2rem
+        color: $dark_bg
+
+        font-style: normal
+        font-weight: 300
+        font-size: 1.6rem
+        line-height: 2.5rem
+        text-align: center
+        mix-blend-mode: normal
+        opacity: 0.6
+
+    &_link
+        margin-top: 2rem
+        width: 16rem
+        height: 5rem
+        background: $orange
+        display: flex
+        align-items: center
+        justify-content: center
+
+        font-style: normal
+        font-weight: bold
+        font-size: 1.3rem
+        line-height: 1.8rem
+        letter-spacing: 0.1rem
+        text-transform: uppercase
+        color: $white
+        transition: background 0.3s ease
+        &:hover
+            background: $orange-act
+
+
+// Tablet
+@media (min-width: 769px)
+
+    .container
+
+        &_img
+            max-width: 69rem
+
+    .info
+        &_description
+            max-width: 69rem
+
+
+// Desktop
+@media (min-width: 1190px)
+
+    .new_product
+        margin-top: 0
+
+    .container_reverse
+        @include margin_desktop_and_tablet
+        max-width: 111rem
+        width: 100%
+        display: flex
+        flex-direction: row-reverse
+        gap: 12rem
+
+
+    .container
+        @include margin_desktop_and_tablet
+        max-width: 111rem
+        width: 100%
+        display: flex
+        flex-direction: row
+        gap: 12rem
+
+        &_img
+            max-width: 54rem
+
+            & img
+                max-width: 35rem
+
+    .info
+        display: flex
+        justify-content: center
+        align-items: start
+        &_name,
+        &_description,
+        &_link
+            text-align: left

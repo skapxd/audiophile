@@ -1,8 +1,11 @@
 import Categories from '../../categories/categories';
-
+import Style from "./second_container.module.sass";
 export default function SecondContainer() {
 
     return (
-        <Categories></Categories>
+
+        <div className={Style.container}>
+            <Categories></Categories>
+        </div>
     );
 }
