@@ -1,3 +1,14 @@
+@import '../../../styles/_theme'
+    
 .container
+    @include padding_movil
     margin-top: 15rem
     margin-bottom: 10rem
+
+
+// Tablet
+@media (min-width: 768px)
+
+    .container
+        @include padding_desktop_and_tablet
+        
