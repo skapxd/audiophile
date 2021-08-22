@@ -15,21 +15,21 @@ export default function Category(data: CategoryI) {
             <img
                 src={data.image}
                 alt=""
-                className={Style.img}
+                className={Style.container_img}
             />
 
             <h5
-                className={Style.name}>
+                className={Style.container_name}>
                 {data.name}
             </h5>
 
             <Link href={data.link}>
                 <a 
-                    className={Style.a}
+                    className={Style.container_link}
                 >
                     shop
 
-                    <span className={Style.arrow_right}></span>
+                    <span className={Style.container_arrow_right}></span>
                 </a>
             </Link>
 
