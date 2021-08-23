@@ -4,7 +4,6 @@ import Product from '../../components/product/product';
 import Categories from '../../components/categories/categories';
 import Best from "../../components/best/best";
 import { useRouter } from "next/router";
-import { GetStaticPaths } from "next";
 
 export async function getStaticPaths() {
 
@@ -33,21 +32,7 @@ export default function Category() {
 
     const { category }: CategoryI = router.query ?? { category: 'none' };
 
-    // const pagesName = [
-    //     'headphones',
-    //     'earphones',
-    //     'speakers'
-    // ]
-
     const products = [1, 2, 3]
-
-
-    // if ( ! pagesName.includes(category)) {
-    //     return (
-    //         <>
-    //         </>
-    //     )
-    // }
 
     return (
         <div className={Style.container}>
@@ -61,7 +46,7 @@ export default function Category() {
                             srcImg='/products/xx99_mark_ii_2.png'
                             name='XX99 Mark II Headphones'
                             description='The new XX99 Mark II headphones is the pinnacle of pristine audio. It redefines your premium headphone experience by reproducing the balanced depth and precision of studio-quality sound.'
-                            link=''
+                            link={`/${category}/XX99 MARK II HEADPHONES`}
                             index={i}
                         />
                     )

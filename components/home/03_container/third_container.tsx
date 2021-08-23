@@ -22,15 +22,15 @@ export default function ThirdContainer() {
 
                     <div className={Style.zx9_text}>
 
-                        <p className={Style.zx9_text_1}>
+                        <p className={Style.zx9_text_name}>
                             zx9 <br /> speaker
                         </p>
 
-                        <p className={Style.zx9_text_2}>
+                        <p className={Style.zx9_text_description}>
                             Upgrade to premium speakers that are phenomenally built to deliver truly remarkable sound.
                         </p>
 
-                        <Link href=''>
+                        <Link href='/speakers'>
                             <a
                                 className={Style.button}>
                                 see product
@@ -54,7 +54,7 @@ export default function ThirdContainer() {
                         ZX7 SPEAKER
                     </p>
 
-                    <Link href=''>
+                    <Link href='/speakers'>
                         <a
                             className={Style.button}>
                             see product
@@ -77,7 +77,7 @@ export default function ThirdContainer() {
                         </p>
 
 
-                        <Link href=''>
+                        <Link href='/earphones'>
                             <a
                                 className={Style.button}>
                                 see product
@@ -88,7 +88,9 @@ export default function ThirdContainer() {
 
                 </div>
 
-                <Best />
+                <div className={Style.best}>
+                    <Best />
+                </div>
 
             </div>
         </div>
