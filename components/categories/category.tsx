@@ -14,7 +14,7 @@ export default function Category(data: CategoryI) {
 
             <img
                 src={data.image}
-                alt=""
+                alt={data.name}
                 className={Style.container_img}
             />
 

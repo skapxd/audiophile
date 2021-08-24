@@ -43,6 +43,7 @@ export default function Category() {
                 {products.map((e, i) => {
                     return (
                         <Product
+                            key={e}
                             srcImg='/products/xx99_mark_ii_2.png'
                             name='XX99 Mark II Headphones'
                             description='The new XX99 Mark II headphones is the pinnacle of pristine audio. It redefines your premium headphone experience by reproducing the balanced depth and precision of studio-quality sound.'

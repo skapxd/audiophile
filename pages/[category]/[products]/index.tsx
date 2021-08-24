@@ -2,6 +2,7 @@ import Style from "./index.module.sass";
 import * as fs from 'fs';
 import { join } from "path";
 import { useState } from "react";
+import Best from '../../../components/best/best';
 
 interface BoxModelI {
     qty: string
@@ -75,76 +76,86 @@ export default function Product(data: PropsProducts) {
 
     return (
 
-        <div className={Style.container}>
-            <div className={Style.container_principal_product}>
-
-                <div className={Style.container_principal_product_img}>
-                    <img
-                        src={data.productModel.imgUrl}
-                        alt="" />
-
-                </div>
-
-                <h3 className={Style.container_principal_product_new}>
-                    new product
-                </h3>
-
-                <h3 className={Style.container_principal_product_title}>
-                    {data.productModel.name}
-                </h3>
-
-                <p className={Style.container_principal_product_description}>
-                    {data.productModel.description}
-                </p>
-
-                <span className={Style.container_principal_product_price}>
-                    ${data.productModel.price}
-                </span>
-
-                <div className={Style.container_principal_product_add_to_cart}>
-
-                    <div className={Style.container_principal_product_add_to_cart_qty}>
-
-                        <button
-
-                            onClick={() => {
-                                if (qty > 0) {
-                                    setQty(qty - 1)
-                                }
-                            }}
-                            className={Style.container_principal_product_add_to_cart_qty_icon}>
-                            -
-                        </button>
+        <div className={Style.bg}>
 
 
-                        <div
-                            className={Style.container_principal_product_add_to_cart_qty_number}>
-                            {qty}
-                        </div>
+            <div className={Style.container}>
+                <div className={Style.container_principal_product}>
 
-
-                        <button
-                            onClick={() => {
-                                setQty(qty + 1);
-                            }}
-                            className={Style.container_principal_product_add_to_cart_qty_icon}>
-                            +
-                        </button>
+                    <div className={Style.container_principal_product_img}>
+                        <img
+                            src={data.productModel.imgUrl}
+                            alt="" />
 
                     </div>
 
-                    <button onClick={addToCartHandler}>
-                        add to cart
-                    </button>
+                    <div className="column">
+                        <h3 className={Style.container_principal_product_new}>
+                            new product
+                        </h3>
+
+                        <h3 className={Style.container_principal_product_title}>
+                            {data.productModel.name}
+                        </h3>
+
+                        <p
+                            dangerouslySetInnerHTML={{ __html: data.productModel.description }}
+                            className={Style.container_principal_product_description}>
+                            {/* {data.productModel.description} */}
+                        </p>
+
+                        <div className={Style.container_principal_product_price}>
+                            ${data.productModel.price}
+                        </div>
+
+                        <div className={Style.container_principal_product_add_to_cart}>
+
+                            <div className={Style.container_principal_product_add_to_cart_qty}>
+
+                                <button
+
+                                    onClick={() => {
+                                        if (qty > 0) {
+                                            setQty(qty - 1)
+                                        }
+                                    }}
+                                    className={Style.container_principal_product_add_to_cart_qty_icon}>
+                                    -
+                                </button>
+
+
+                                <div
+                                    className={Style.container_principal_product_add_to_cart_qty_number}>
+                                    {qty}
+                                </div>
+
+
+                                <button
+                                    onClick={() => {
+                                        setQty(qty + 1);
+                                    }}
+                                    className={Style.container_principal_product_add_to_cart_qty_icon}>
+                                    +
+                                </button>
+
+                            </div>
+
+                            <button onClick={addToCartHandler}>
+                                add to cart
+                            </button>
+                        </div>
+
+                    </div>
+
                 </div>
 
                 <h3 className={Style.container_principal_product_title}>
                     features
                 </h3>
-                <p className={Style.container_principal_product_feature}>
-                    {data.productModel.features}
-                    <br />
-                    a
+                <p
+                    dangerouslySetInnerHTML={{ __html: data.productModel.features }}
+                    className={Style.container_principal_product_feature}>
+                    {/*  */}
                 </p>
 
                 <h3 className={Style.container_principal_product_title}>
@@ -169,7 +180,12 @@ export default function Product(data: PropsProducts) {
                     })}
 
                 </ul>
+
+                <div className={Style.container_principal_product_best}>
+                    <Best />
+                </div>
             </div>
         </div>
+
     )
 }

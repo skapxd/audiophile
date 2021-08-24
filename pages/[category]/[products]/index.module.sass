@@ -1,5 +1,9 @@
 @import '../../../styles/_theme'
 
+.column
+    display: flex
+    flex-direction: column
+
 .container
     @include padding_movil
 
@@ -9,13 +13,15 @@
         flex-direction: column
         align-items: center
 
-
         &_img
+            display: flex
+            flex-direction: column
+            justify-content: center
             background: $category_card_bg
             border-radius: 0.8rem
             padding: 4rem 4rem 6rem 4rem
-            max-width: 33rem    
-                
+            max-width: 33rem
+
             & > img
                 width: 100%
 
@@ -28,7 +34,7 @@
             font-size: 1.4rem
             line-height: 1.9rem
             letter-spacing: 1.0rem
-            
+
             text-transform: uppercase
             text-align: left
 
@@ -37,13 +43,13 @@
         &_title
             margin-top: 3rem
             width: 100%
-            
+
             font-style: normal
             font-weight: bold
             font-size: 2.8rem
             line-height: 3.8rem
             letter-spacing: .1rem
-            
+
             text-transform: uppercase
             text-align: left
 
@@ -63,7 +69,7 @@
             opacity: 0.6
 
         &_price
-            width: 100% 
+            width: 100%
             margin-top: 3rem
 
             font-style: normal
@@ -89,7 +95,7 @@
                 flex-direction: row
                 width: 12rem
                 background: $category_card_bg
-                    
+
                 &_icon
                     height: 5rem
                     width: 4rem
@@ -111,9 +117,9 @@
                     display: flex
                     flex-direction: column
                     justify-content: center
-    
                     height: 5rem
                     width: 4rem
+
                     font-style: normal
                     font-weight: bold
                     font-size: 1.3rem
@@ -124,7 +130,6 @@
                     text-transform: uppercase
 
                     color: $dark_bg
-                                
 
             & > button
                 height: 5rem
@@ -147,11 +152,13 @@
                 color: $white
 
         &_box
+            margin-top: 1rem
+            margin-bottom: 3rem
+
             display: flex
             flex-direction: column
             width: 100%
             padding: 0
-            margin-top: 1rem 
             gap: 1rem
 
             &_container
@@ -179,3 +186,59 @@
 
                     mix-blend-mode: normal
                     opacity: 0.7
+
+        &_best
+            margin-bottom: 5rem
+            width: 100%
+
+// Tablet
+@media (min-width: 768px)
+    .container
+        @include padding_desktop_and_tablet
+
+        &_principal_product
+            gap: 7rem
+            display: flex
+            flex-direction: row
+            justify-content: center
+
+            &_description
+                max-width: 34rem
+
+            &_img
+                height: 100%
+                min-height: 48rem 
+                width: 100%
+                min-width: 28rem
+                
+    .column
+        display: flex
+        flex-direction: column
+        width: 100%
+
+// Desktop
+@media (min-width: 1190px)
+
+    .bg
+        display: flex
+        flex-direction: column
+        align-items: center
+
+    .container
+        max-width: 111rem
+        padding: 0 0
+
+        &_principal_product
+            gap: 12rem
+            display: flex
+            flex-direction: row
+            justify-content: start
+
+            &_description
+                max-width: 34rem
+
+            &_img
+                height: 100%
+                max-height: 54rem
+                width: 100%
+                max-width: 56rem

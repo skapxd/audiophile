@@ -1,9 +1,9 @@
 import Style from "./first_container.module.sass";
 import Image from "next/image";
-
+import Link from "next/link";
 export default function FirstScreen() {
 
-    return ( 
+    return (
         <div className={Style.bg}>
 
             <div className={Style.container}>
@@ -18,14 +18,19 @@ export default function FirstScreen() {
                         Experience natural, lifelike audio and exceptional build quality made for the passionate music enthusiast.
                     </p>
 
-                    <button className={Style.button}>
-                        see product
-                    </button>
+                    <Link href='/headphones' >
+                        <a
+                            className={Style.button}
+                            >
+
+                            see product
+                        </a>
+                    </Link>
                 </div>
 
                 <div className={Style.head_phone}>
 
-                    
+
                     <Image
                         priority
                         src='/products/xx99_mark_ii.png'
