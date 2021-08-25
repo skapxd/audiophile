@@ -11,6 +11,7 @@ interface BoxModelI {
     name: string
 }
 interface ProductModelI {
+    id: number
     imgUrl: string
     name: string
     description: string
@@ -102,11 +103,12 @@ export default function Product(data: PropsProducts) {
                             ${data.productModel.price}
                         </div>
 
-                        <AddToCart 
-                        img={data.productModel.imgUrl}
-                        price={Number(data.productModel.price)}
-                        qty={0}
-                        name={data.productModel.name}
+                        <AddToCart
+                            id={data.productModel.id}
+                            img={data.productModel.imgUrl}
+                            price={Number(data.productModel.price)}
+                            qty={0}
+                            name={data.productModel.name}
 
 
                         />
@@ -133,7 +135,7 @@ export default function Product(data: PropsProducts) {
                     {data.productModel.box.map((e) => {
 
                         return (
-                            <li 
+                            <li
                                 key={e.name}
                                 className={Style.container_principal_product_box_container}>
                                 <div className={Style.container_principal_product_box_container_qty}>

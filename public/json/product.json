@@ -1,5 +1,6 @@
 {
     "listOfProduct": [{
+            "id": 1,
             "category": "headphones",
             "imgUrl": "/products/image-removebg-preview(47).png",
             "name": "XX99 Mark II Headphones",
@@ -29,6 +30,7 @@
             ]
 
         },{
+            "id": 2,
             "category": "headphones",
             "imgUrl": "/products/image-removebg-preview(47).png",
             "name": "XX99 Mark I Headphones",

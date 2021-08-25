@@ -1,44 +1,57 @@
 import { useContext, useEffect, useState } from "react";
-import { CustomContextApp, } from "../../context/custom_app_context";
-import { CartActionI, CartReducerI, TypeActionCart } from "../../reducers/cart_reducer";
-import Style from "./popup_cart.module.sass";
+import { CustomContextApp } from '../../bloc/custom_context_app';
+import { ProductActionI, TypeProductAction } from "../../bloc/reducers/product_reducer";
+import { TypePopUpAction } from "../../bloc/reducers/show_popup_reducer";
+import { TotalPriceActionI, TypeTotalPriceAction } from "../../bloc/reducers/total_price";
+
 import Item from "./items/item";
+import TotalPrice from "./total_price/total_price";
+import Style from "./popup_cart.module.sass";
+
 
 export default function PopupCart() {
+    const context = useContext(CustomContextApp);
 
-    const { cartPopupState, cartPopupDispatch }: CartReducerI = useContext(CustomContextApp);
+    const {
+        productState,
+        setProduct,
 
-    const [ifShowPopupCart, setIfShowPopupCart] = useState(cartPopupState.ifShow);
+        popupState,
+        setPopup,
 
+        setTotalPrice
+    } = useContext(CustomContextApp);
+
+    const [ifShowPopupCart, setIfShowPopupCart] = useState(popupState);
 
     useEffect(() => {
-
-        setIfShowPopupCart(cartPopupState.ifShow)
-
-    }, [cartPopupState.ifShow]);
+        setIfShowPopupCart(popupState)
+    }, [popupState]);
 
     const bgHandler = () => {
 
-        const action: CartActionI = {
-            type: TypeActionCart.HIDDEN_CART,
-        }
-        cartPopupDispatch(action)
+        setPopup(TypePopUpAction.HIDDEN)
 
-        setIfShowPopupCart(cartPopupState.ifShow)
+        setIfShowPopupCart(popupState)
     }
 
     const removeAllHandler = () => {
-        const action: CartActionI = {
-            type: TypeActionCart.REMOVE_ALL_PRODUCT
+
+        const totalAction: TotalPriceActionI = {
+            payload: { value: 0 },
+            type: TypeTotalPriceAction.RESET
         }
 
+        const productAction: ProductActionI = {
+            type: TypeProductAction.REMOVE_ALL_PRODUCT
+        }
 
+        setProduct(productAction)
 
-        cartPopupDispatch(action)
+        setTotalPrice(totalAction)
     }
 
-    let product = cartPopupState.products
-    // let product = [1, 2, 3]
+    let products = productState.products ?? []
 
     const PopupCartCopy = () => {
         return (
@@ -70,12 +83,13 @@ export default function PopupCart() {
 
                         <div className={Style.container_wrapper_column}>
 
-                            {product.map(({name, qty, price, img}) => {
+                            {products.map(({ name, qty, price, img, id }, i ) => {
 
                                 const random = Math.random()
                                 return (
-                                    // <Item key={e} />
                                     <Item
+                                        index={i}
+                                        id={id}
                                         name={name}
                                         qty={qty}
                                         price={price}
@@ -87,17 +101,7 @@ export default function PopupCart() {
                         </div>
 
 
-                        <div className={Style.container_wrapper_row}>
-
-                            <div className={Style.container_wrapper_row_total_title}>
-                                total
-                            </div>
-
-                            <div className={Style.container_wrapper_row_total_value}>
-                                $5.396
-                            </div>
-
-                        </div>
+                        <TotalPrice />
 
                         <button>
                             checkout

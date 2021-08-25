@@ -39,11 +39,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
 
-    console.log(params);
-
     const pathProducts = join(__dirname, '../../../', 'public/json/product.json')
-
-    console.log(pathProducts);
 
     const productString = fs.readFileSync(pathProducts, {
         encoding: 'utf-8'
@@ -53,8 +49,6 @@ export async function getStaticProps({ params }) {
 
     const productModelCategoryEqualToCategoryUrl = productsModel.listOfProduct.filter((e, i) => {
         if (e.category === params.category) {
-            console.log('product category equal to category url');
-            console.log(i);
             return e
         }
     })

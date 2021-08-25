@@ -3,7 +3,7 @@ export enum TypePopUpAction {
     HIDDEN
 }
 
-interface PopupReducerI {
+export interface PopupReducerI {
     state: boolean
     action: TypePopUpAction
 }

@@ -1,31 +1,24 @@
 import Style from "./header.module.sass";
-import Image from "next/image";
-import Link from "next/link";
 import Links from "../links/links";
 import Drawer from './drawer';
-import { CustomContextApp } from "../../../context/custom_app_context";
 import { useContext } from "react";
-import { CartActionI, CartReducerI, TypeActionCart } from '../../../reducers/cart_reducer';
+import { CustomContextApp, CustomContextAppI } from "../../../bloc/custom_context_app";
+import { TypePopUpAction } from "../../../bloc/reducers/show_popup_reducer";
 
 export default function Header() {
 
-    const { cartPopupState, cartPopupDispatch: dispatch }: CartReducerI = useContext(CustomContextApp);
+    const {
+        setPopup
+    }: CustomContextAppI = useContext(CustomContextApp);
 
     const handlerClick = () => {
 
-        const action: CartActionI = {
-            type: TypeActionCart.SHOW_CART,
-            payload: {
-                ifShow: true,
-                products: cartPopupState.products
-            }
-        }
 
-        dispatch(action)
+        setPopup(TypePopUpAction.SHOW)
 
     }
     return (
-        <>  
+        <>
 
             <header className={Style.header}>
 
@@ -57,10 +50,10 @@ export default function Header() {
                 </div>
             </header>
 
-                        <div className={Style.box_size_heigh}>
+            <div className={Style.box_size_heigh}>
 
             </div>
-    
+
         </>
     )
 }

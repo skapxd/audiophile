@@ -1,21 +1,74 @@
-import { useContext, useEffect } from "react";
-import { CustomContextApp } from "../../../context/custom_app_context";
 import useCounter from "../../../hooks/counter_hook";
-import { CartReducerI, ProductPayloadI } from "../../../reducers/cart_reducer";
+import { ProductActionI, ProductPayloadI, TypeProductAction } from "../../../bloc/reducers/product_reducer";
 import Style from "./item.module.sass";
+import { CustomContextApp } from "../../../bloc/custom_context_app";
+import { useContext, useEffect } from "react";
+import { TotalPriceActionI, TypeTotalPriceAction } from "../../../bloc/reducers/total_price";
 
-export default function Item(data: ProductPayloadI) {
+interface Item extends ProductPayloadI {
+    index: number
+}
 
-    const { counterState, counterIncrement, counterDecrement } = useCounter()
 
-    const { cartPopupDispatch, cartPopupState}: CartReducerI = useContext(CustomContextApp);
+export default function Item(data: Item,) {
 
-    // useEffect(() => {
-    //     effect
-    //     return () => {
-    //         cleanup
-    //     };
-    // }, [input]);
+    const {
+        setTotalPrice,
+        totalPriceState,
+
+        productState,
+        setProduct,
+
+    } = useContext(CustomContextApp);
+
+    const subtractCounterHandler = () => {
+
+        if (data.qty > 0) {
+
+            const totalPriceAction: TotalPriceActionI = {
+                payload: {
+                    value: data.price
+                },
+                type: TypeTotalPriceAction.SUBTRACT
+            }
+
+
+            const productAction: ProductActionI = {
+                type: TypeProductAction.ADD_PRODUCT,
+                payload: {
+                    ...data,
+                    qty: (data.qty - 1)
+                }
+            }
+
+            setTotalPrice(totalPriceAction)
+
+            setProduct(productAction)
+        }
+    }
+
+    const addCounterHandler = () => {
+
+        const totalPriceAction: TotalPriceActionI = {
+            payload: {
+                value: data.price
+            },
+            type: TypeTotalPriceAction.ADD
+        }
+
+        const productAction: ProductActionI = {
+            type: TypeProductAction.ADD_PRODUCT,
+            payload: {
+                ...data,
+                qty: (data.qty + 1)
+            }
+        }
+
+        setTotalPrice(totalPriceAction)
+
+        setProduct(productAction)
+
+    }
 
     return (
         <div
@@ -35,7 +88,6 @@ export default function Item(data: ProductPayloadI) {
                 <h3
                     className={Style.container_info_name}>
                     {data.name}
-                    {/* {data.name.substr(0, 6)}... */}
                 </h3>
 
                 <h3
@@ -47,18 +99,18 @@ export default function Item(data: ProductPayloadI) {
             <div className={Style.container_qty}>
 
                 <button
-                    onClick={counterDecrement}
+                    onClick={subtractCounterHandler}
                     className={Style.container_qty_icon}>
                     -
                 </button>
 
                 <div className={Style.container_qty_text}>
-                    {counterState}
+                    {productState.products[data.index].qty}
                 </div>
 
 
                 <button
-                    onClick={counterIncrement}
+                    onClick={addCounterHandler}
                     className={Style.container_qty_icon}>
                     +
                 </button>

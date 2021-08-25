@@ -3,7 +3,7 @@ import Head from "next/head";
 import Header from "../components/layout/header/header";
 import Footer from '../components/layout/footer/footer';
 import PopupCart from '../components/popup_cart/popup_cart';
-import { CustomContextApp, customContextValues } from '../context/custom_app_context';
+import { CustomContextApp, customContextValues } from '../bloc/custom_context_app';
 
 export default function App({ Component, pageProps }) {
 
