@@ -1,8 +1,10 @@
-import Style from "./index.module.sass";
+import Style from "./product.module.sass";
 import * as fs from 'fs';
 import { join } from "path";
 import { useState } from "react";
 import Best from '../../../components/best/best';
+import useCounter from "../../../hooks/counter_hook";
+import AddToCart from "../../../components/product_page/components/add_to_cart";
 
 interface BoxModelI {
     qty: string
@@ -20,6 +22,7 @@ interface ProductModelI {
 interface ListProductModelI {
     listOfProduct: ProductModelI[]
 }
+
 
 export async function getServerSideProps(context: any) {
 
@@ -65,14 +68,6 @@ interface PropsProducts {
 
 export default function Product(data: PropsProducts) {
 
-    const [qty, setQty] = useState(0)
-
-    const addToCartHandler = () => {
-        console.log('object');
-    }
-
-
-    // data.productModel.features = data.productModel.features.replace('\n', '<br>')
 
     return (
 
@@ -101,49 +96,20 @@ export default function Product(data: PropsProducts) {
                         <p
                             dangerouslySetInnerHTML={{ __html: data.productModel.description }}
                             className={Style.container_principal_product_description}>
-                            {/* {data.productModel.description} */}
                         </p>
 
                         <div className={Style.container_principal_product_price}>
                             ${data.productModel.price}
                         </div>
 
-                        <div className={Style.container_principal_product_add_to_cart}>
-
-                            <div className={Style.container_principal_product_add_to_cart_qty}>
-
-                                <button
-
-                                    onClick={() => {
-                                        if (qty > 0) {
-                                            setQty(qty - 1)
-                                        }
-                                    }}
-                                    className={Style.container_principal_product_add_to_cart_qty_icon}>
-                                    -
-                                </button>
+                        <AddToCart 
+                        img={data.productModel.imgUrl}
+                        price={Number(data.productModel.price)}
+                        qty={0}
+                        name={data.productModel.name}
 
 
-                                <div
-                                    className={Style.container_principal_product_add_to_cart_qty_number}>
-                                    {qty}
-                                </div>
-
-
-                                <button
-                                    onClick={() => {
-                                        setQty(qty + 1);
-                                    }}
-                                    className={Style.container_principal_product_add_to_cart_qty_icon}>
-                                    +
-                                </button>
-
-                            </div>
-
-                            <button onClick={addToCartHandler}>
-                                add to cart
-                            </button>
-                        </div>
+                        />
 
                     </div>
 
@@ -167,7 +133,9 @@ export default function Product(data: PropsProducts) {
                     {data.productModel.box.map((e) => {
 
                         return (
-                            <li className={Style.container_principal_product_box_container}>
+                            <li 
+                                key={e.name}
+                                className={Style.container_principal_product_box_container}>
                                 <div className={Style.container_principal_product_box_container_qty}>
                                     {e.qty}x
                                 </div>

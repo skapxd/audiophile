@@ -4,6 +4,26 @@ import Product from '../../components/product/product';
 import Categories from '../../components/categories/categories';
 import Best from "../../components/best/best";
 import { useRouter } from "next/router";
+import * as fs from "fs";
+import { join } from "path";
+
+interface BoxModelI {
+    qty: string
+    name: string
+}
+interface ProductModelI {
+    category: string
+    imgUrl: string
+    name: string
+    description: string
+    price: string
+    features: string
+    box: BoxModelI[]
+}
+
+interface ListProductModelI {
+    listOfProduct: ProductModelI[]
+}
 
 export async function getStaticPaths() {
 
@@ -18,11 +38,47 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-    return { props: {} }
+
+    console.log(params);
+
+    const pathProducts = join(__dirname, '../../../', 'public/json/product.json')
+
+    console.log(pathProducts);
+
+    const productString = fs.readFileSync(pathProducts, {
+        encoding: 'utf-8'
+    })
+
+    const productsModel: ListProductModelI = JSON.parse(productString)
+
+    const productModelCategoryEqualToCategoryUrl = productsModel.listOfProduct.filter((e, i) => {
+        if (e.category === params.category) {
+            console.log('product category equal to category url');
+            console.log(i);
+            return e
+        }
+    })
+
+    // if (pro) {
+
+    // }
+
+    return {
+        props: {
+            products: productModelCategoryEqualToCategoryUrl,
+            category: params.category
+        }
+    }
 }
 
 
-export default function Category() {
+export default function Category({
+    products,
+    category
+}: {
+    products: ProductModelI[],
+    category: string
+}) {
 
     const router = useRouter();
 
@@ -30,9 +86,9 @@ export default function Category() {
         category?: string
     }
 
-    const { category }: CategoryI = router.query ?? { category: 'none' };
+    // const { category }: CategoryI = router.query ?? { category: 'none' };
 
-    const products = [1, 2, 3]
+    // const products = [1, 2, 3]
 
     return (
         <div className={Style.container}>
@@ -43,11 +99,11 @@ export default function Category() {
                 {products.map((e, i) => {
                     return (
                         <Product
-                            key={e}
-                            srcImg='/products/xx99_mark_ii_2.png'
-                            name='XX99 Mark II Headphones'
-                            description='The new XX99 Mark II headphones is the pinnacle of pristine audio. It redefines your premium headphone experience by reproducing the balanced depth and precision of studio-quality sound.'
-                            link={`/${category}/XX99 MARK II HEADPHONES`}
+                            key={e.name}
+                            srcImg={e.imgUrl}
+                            name={e.name}
+                            description={e.description}
+                            link={`/${category}/${e.name}`}
                             index={i}
                         />
                     )

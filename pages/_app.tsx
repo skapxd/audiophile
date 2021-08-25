@@ -1,22 +1,26 @@
 import '../styles/normalize.css'
+import Head from "next/head";
 import Header from "../components/layout/header/header";
 import Footer from '../components/layout/footer/footer';
 import PopupCart from '../components/popup_cart/popup_cart';
-import { PopUpCart, } from '../context/product_context';
-import { useReducer, useState } from 'react';
-import cartReducer from '../reducers/cart_reducer/cart_reducer';
-
+import { CustomContextApp, customContextValues } from '../context/custom_app_context';
 
 export default function App({ Component, pageProps }) {
-
-    const [state, dispatch] = useReducer(cartReducer, {})
-
-
 
     return (
 
         <>
-            <PopUpCart.Provider value={{ state, dispatch }}>
+
+            <Head>
+
+                <link
+                    rel="stylesheet"
+                    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+                />
+
+            </Head>
+
+            <CustomContextApp.Provider value={customContextValues()}>
 
                 <PopupCart />
 
@@ -25,7 +29,7 @@ export default function App({ Component, pageProps }) {
                 <Component {...pageProps} />
 
                 <Footer />
-            </PopUpCart.Provider>
+            </CustomContextApp.Provider>
         </>
     )
 }

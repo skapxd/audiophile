@@ -1,0 +1,95 @@
+@import '../../../styles/_theme'
+
+.container
+    width: 100%
+    display: flex
+    flex-direction: row
+    // justify-content: space-between
+    // gap: 1rem
+    align-items: center
+
+    &_img
+        padding: 1.3rem
+        width: 6.5rem
+        border-radius: 0.8rem
+        height: 6.5rem
+        background: $category_card_bg
+
+        & > img
+            width: 100%
+
+    &_info
+        display: flex
+        flex-direction: column
+        justify-content: center
+        // gap: 0.5rem
+        margin-left: 1rem
+
+        &_name
+            width: 9rem
+            
+            font-style: normal
+            font-weight: bold
+            font-size: 1.5rem
+            line-height: 2.5rem
+
+            text-overflow: ellipsis
+            overflow: hidden
+            white-space: nowrap
+
+            color: $dark_bg
+
+        &_price
+            font-style: normal
+            font-weight: bold
+            font-size: 1.4rem
+            line-height: 2.5rem
+
+            color: $dark_bg
+
+            mix-blend-mode: normal
+            opacity: 0.5
+            
+
+    &_qty
+        margin-left: auto
+        display: flex
+        flex-direction: row
+        background: $category_card_bg
+
+        &_icon
+            height: 3rem
+            width: 3rem
+
+            font-style: normal
+            font-weight: bold
+            font-size: 1.6rem
+            line-height: 1.8rem
+            /* identical to box height */
+
+            text-align: center
+            letter-spacing: .1rem
+            text-transform: uppercase
+
+            color: $dark_bg
+
+            mix-blend-mode: normal
+            opacity: 0.25
+
+        &_text
+            display: flex
+            flex-direction: column
+            justify-content: center
+
+            font-style: normal
+            font-weight: bold
+            font-size: 1.6rem
+            line-height: 1.8rem
+
+            text-align: center
+            letter-spacing: .1rem
+            text-transform: uppercase
+
+            color: $dark_bg
+
+            

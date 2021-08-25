@@ -3,20 +3,21 @@ import Image from "next/image";
 import Link from "next/link";
 import Links from "../links/links";
 import Drawer from './drawer';
-import { PopUpCart } from "../../../context/product_context";
+import { CustomContextApp } from "../../../context/custom_app_context";
 import { useContext } from "react";
-import { CartActionI, CartReducerI, TypeActionCart } from '../../../reducers/cart_reducer/cart_reducer';
+import { CartActionI, CartReducerI, TypeActionCart } from '../../../reducers/cart_reducer';
 
 export default function Header() {
 
-    const { state, dispatch }: CartReducerI = useContext(PopUpCart);
+    const { cartPopupState, cartPopupDispatch: dispatch }: CartReducerI = useContext(CustomContextApp);
 
     const handlerClick = () => {
 
         const action: CartActionI = {
             type: TypeActionCart.SHOW_CART,
             payload: {
-                ifShow: true
+                ifShow: true,
+                products: cartPopupState.products
             }
         }
 
@@ -24,7 +25,7 @@ export default function Header() {
 
     }
     return (
-        <>
+        <>  
 
             <header className={Style.header}>
 
@@ -55,6 +56,11 @@ export default function Header() {
 
                 </div>
             </header>
+
+                        <div className={Style.box_size_heigh}>
+
+            </div>
+    
         </>
     )
 }

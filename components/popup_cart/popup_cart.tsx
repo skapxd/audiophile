@@ -1,32 +1,44 @@
 import { useContext, useEffect, useState } from "react";
-import { PopUpCart, } from "../../context/product_context";
-import { CartActionI, CartReducerI, TypeActionCart } from "../../reducers/cart_reducer/cart_reducer";
+import { CustomContextApp, } from "../../context/custom_app_context";
+import { CartActionI, CartReducerI, TypeActionCart } from "../../reducers/cart_reducer";
 import Style from "./popup_cart.module.sass";
+import Item from "./items/item";
 
 export default function PopupCart() {
 
-    const { state, dispatch }: CartReducerI = useContext(PopUpCart);
+    const { cartPopupState, cartPopupDispatch }: CartReducerI = useContext(CustomContextApp);
 
-    const [ifShowPopupCart, setIfShowPopupCart] = useState(state.ifShow);
+    const [ifShowPopupCart, setIfShowPopupCart] = useState(cartPopupState.ifShow);
 
 
     useEffect(() => {
 
-        setIfShowPopupCart(state.ifShow)
+        setIfShowPopupCart(cartPopupState.ifShow)
 
-    }, [state.ifShow]);
+    }, [cartPopupState.ifShow]);
 
     const bgHandler = () => {
 
         const action: CartActionI = {
             type: TypeActionCart.HIDDEN_CART,
         }
-        dispatch(action)
+        cartPopupDispatch(action)
 
-        setIfShowPopupCart(state.ifShow)
+        setIfShowPopupCart(cartPopupState.ifShow)
     }
 
-    let product = [1, 2, 3]
+    const removeAllHandler = () => {
+        const action: CartActionI = {
+            type: TypeActionCart.REMOVE_ALL_PRODUCT
+        }
+
+
+
+        cartPopupDispatch(action)
+    }
+
+    let product = cartPopupState.products
+    // let product = [1, 2, 3]
 
     const PopupCartCopy = () => {
         return (
@@ -48,7 +60,9 @@ export default function PopupCart() {
                             </div>
 
 
-                            <button className={Style.container_wrapper_row_remove}>
+                            <button
+                                onClick={removeAllHandler}
+                                className={Style.container_wrapper_row_remove}>
                                 Remove all
                             </button>
                         </div>
@@ -56,18 +70,18 @@ export default function PopupCart() {
 
                         <div className={Style.container_wrapper_column}>
 
-                            {product.map((e) => {
+                            {product.map(({name, qty, price, img}) => {
+
+                                const random = Math.random()
                                 return (
-                                    <div
-                                        key={e}
-                                        className={Style.container_wrapper_row}>
-                                        <img
-                                            src=""
-                                            alt=""
-                                            className={Style.container_wrapper_row} />
-
-
-                                    </div>
+                                    // <Item key={e} />
+                                    <Item
+                                        name={name}
+                                        qty={qty}
+                                        price={price}
+                                        img={img}
+                                        key={random}
+                                    />
                                 )
                             })}
                         </div>
@@ -101,7 +115,6 @@ export default function PopupCart() {
         <>
             {
                 ifShowPopupCart && <PopupCartCopy />
-                // state.ifShow && <PopupCartCopy />
             }
         </>
     )
