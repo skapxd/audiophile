@@ -1,10 +1,8 @@
 import Style from "./product.module.sass";
 import * as fs from 'fs';
 import { join } from "path";
-import { useState } from "react";
 import Best from '../../../components/best/best';
-import useCounter from "../../../hooks/counter_hook";
-import AddToCart from "../../../components/product_page/components/add_to_cart";
+import AddToCart from "../../../components/product_page/add_to_cart/add_to_cart";
 
 interface BoxModelI {
     qty: string

@@ -1,0 +1,44 @@
+// @import '../../styles/_theme'
+@import '../../styles/_theme'
+
+@mixin stringWithinField
+    font-style: normal
+    font-weight: bold
+    font-size: 1.4rem
+    line-height: 1.9rem
+    text-transform: capitalize
+
+    color: $dark_bg
+
+    mix-blend-mode: normal
+
+.customFieldContainer
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+
+    height: 8rem
+    max-width: 28rem
+    width: 100%
+
+    &_name
+        font-style: normal
+        font-weight: bold
+        font-size: 1.2rem
+        line-height: 1.6rem
+
+        color: $dark_bg
+
+        text-transform: capitalize
+
+    &_input
+        border-radius: 0.8rem
+        width: 100%
+        height: 5rem
+        border: .1rem solid #CFCFCF
+        padding-left: 2rem
+        @include stringWithinField
+
+        &::placeholder
+            @include stringWithinField
+            opacity: 0.4
