@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from 'next/link';
 
 import { CustomContextApp } from '../../bloc/custom_context_app';
@@ -11,13 +11,23 @@ import Style from "./checkout.module.sass";
 
 export default function Checkout() {
 
+    let map: JSX.Element = <MapPopup
+    onBack={() => { setShowMap(false) }}
+    onChangeLocation={(latLng) => {
+        setForm((s) => ({
+            ...s,
+            latLng
+        }))
+    }}
+/>;
+
     const { productState, totalPriceState } = useContext(CustomContextApp);
 
     const [form, setForm] = useState({
         name: '',
         email: '',
         phone: '',
-        location: {
+        latLng: {
             lat: 0,
             lng: 0,
         }
@@ -25,15 +35,32 @@ export default function Checkout() {
 
     const [showMap, setShowMap] = useState(false);
 
+    useEffect(() => {
+
+        console.log('hola')
+        map = (
+            <MapPopup
+                onBack={() => { setShowMap(false) }}
+                onChangeLocation={(latLng) => {
+                    setForm((s) => ({
+                        ...s,
+                        latLng
+                    }))
+                }}
+            />
+        )
+        // return () => {
+        //     cleanup
+        // };
+    }, [form.latLng]);
+
     return (
 
         <div>
             {
                 !showMap
                     ? <> </>
-                    : <MapPopup
-                        onBack={() => { setShowMap(false) }}
-                    />
+                    : map
             }
 
 
@@ -47,13 +74,9 @@ export default function Checkout() {
                     </h2>
 
                     <h3 className={Style.bg_form_formTitle}>billing details</h3>
-                    {/* <h3 className={Style.bg_form_groupFields_title}>billing details</h3> */}
 
                     <div className={Style.bg_form_groupFields}>
 
-                        {/* <div
-                            className={Style.bg_form_groupFields_flexCustomField}
-                        > */}
 
                         <div
                             className={Style.bg_form_groupFields_customField}
@@ -113,14 +136,13 @@ export default function Checkout() {
                                 name='location'
                                 placeholder='click to open map'
                                 disable={true}
-                                value={form.location.lat === 0 ? '' : `lat: ${form.location.lat} - lng: ${form.location.lng}`}
+                                value={form.latLng.lat === 0 ? '' : `lat: ${form.latLng.lat} - lng: ${form.latLng.lng}`}
                                 onChange={(value) => { }}
                                 onClick={() => {
                                     setShowMap(true)
                                 }}
                             />
                         </div>
-                        {/* </div> */}
 
                     </div>
                 </div>

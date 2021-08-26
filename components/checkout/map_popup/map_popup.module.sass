@@ -27,7 +27,6 @@
 
         position: fixed
         width: 100%
-        // flex: 1
         max-width: 45rem
         height: 100vh
         background: $white
@@ -45,6 +44,17 @@
             &_backArrow
                 cursor: pointer
                 margin-left: 2rem
+                height: 4rem
+                width: 4rem
+                padding: .75rem
+
+                & path
+                    fill: $dark_bg
+
+            &_save
+                cursor: pointer
+                margin-left: auto
+                margin-right: 2rem
                 height: 4rem
                 width: 4rem
                 padding: .75rem
@@ -70,6 +80,7 @@
                     height: 6rem
                     width: 6rem
                     cursor: pointer
+                    z-index: 100000
 
                     & svg
                         background: $dark_bg

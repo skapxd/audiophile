@@ -1,74 +1,123 @@
-import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
-import { useCallback, useState } from "react";
-
 import Style from "./map_popup.module.sass";
-export default function MapPopup({ onBack }: { onBack: () => void }) {
-    const { isLoaded } = useJsApiLoader({
-        id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyArhQs7A008ckA6YIUZ07OPAb2TMG74Ncs"
-    })
+import { useEffect } from "react";
+import { Loader } from "@googlemaps/js-api-loader";
 
-    // const [map, setMap] = useState(null)
 
-    const [info, setInfo] = useState({
-        lat: 6.0249862,
-        lng: -75.4367498
+interface LatLngI {
+    lat: number
+    lng: number
+}
+interface MapPopupI {
+    onBack: () => void
+    onChangeLocation: (latLng: LatLngI) => void
+}
+
+export default function MapPopup(data: MapPopupI) {
+
+    let map: google.maps.Map
+    let infoWindow: google.maps.InfoWindow;
+    let markers: google.maps.Marker[] = []
+    let latLng: LatLngI = {
+        lat: 0,
+        lng: 0
+    }
+
+    const loader = new Loader({
+        apiKey: "AIzaSyArhQs7A008ckA6YIUZ07OPAb2TMG74Ncs",
+        version: "weekly",
     });
 
-    const onLoad = useCallback(function callback(map) {
-        // @ts-ignore
-        const bounds = new window.google.maps.LatLngBounds(
-            // [
-            // 6.0249862, -75.4367498 
-            // ]
-        );
-        // const bounds = window.google.maps.LatLngBounds();
+    const initMap = () => {
+
+        let listenerClick: google.maps.MapsEventListener;
+
+        loader.load().then(() => {
+            map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+                disableDefaultUI: true,
+                zoom: 5,
+                center: {
+                    lat: 0,
+                    lng: 0
+                },
+            });
+            infoWindow = new google.maps.InfoWindow();
+
+            console.log('add event listener')
+            listenerClick = map.addListener('click', (e) => {
+                console.log(e)
+
+                let lat = e.latLng.lat()
+                let lng = e.latLng.lng()
+
+                latLng = {
+                    lat, lng
+                }
+
+                markers?.forEach((e) => {
+                    e.setMap(null);
+                })
+
+                const marker = new google.maps.Marker({
+                    position: latLng,
+                    map
+                })
+
+                markers.push(marker)
+            })
+        });
+
+        return () => {
+            console.log('delete event listener')
+            google.maps.event.removeListener(listenerClick);
+        }
+    }
+
+    // initMap()
+    useEffect(initMap, []);
 
 
-        console.log(bounds)
-        map.fitBounds(bounds);
-
-        // setMap(map)
-    }, [])
-
-    const onUnmount = useCallback(function callback(map) {
-        // setMap(null)
-    }, [])
-
-    const success = (position) => {
-
-        setInfo({
+    const success = (position: GeolocationPosition) => {
+        const pos = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
+        };
+        markers?.forEach((e) => {
+            e.setMap(null);
         })
 
-        // setInfo({
-        //     lat: 6.0249862,
-        //     lng: -75.4367498
-        // })
+        const marker = new google.maps.Marker({
+            position: pos,
+            map
+        })
 
-        console.log(position)
+        markers.push(marker)
+        // infoWindow.setPosition(pos);
+        // infoWindow.setContent("Location found.");
+        infoWindow.open(map);
+        map.setCenter(pos);
     }
 
     const locationHandler = () => {
 
-
-        // setInfo({
-        //     lat: 6.0249862,
-        //     lng: -75.4367498
-        // })
-
-
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(success, () => { }, { enableHighAccuracy: true, maximumAge: 10000 })
+            navigator.geolocation.getCurrentPosition(
+                success,
+                () => { },
+                { enableHighAccuracy: true, maximumAge: 10000 }
+            )
+
         }
     }
+
+
+
+
     return (
         <div className={Style.mapPopup}>
 
             <div
                 className={Style.mapPopup_bg}
-                onClick={onBack}
+                onClick={data.onBack}
             ></div>
 
             <div className={Style.mapPopup_wrapper}>
@@ -76,7 +125,7 @@ export default function MapPopup({ onBack }: { onBack: () => void }) {
                 <div className={Style.mapPopup_wrapper_navbar}>
 
                     <svg
-                        onClick={onBack}
+                        onClick={data.onBack}
                         className={Style.mapPopup_wrapper_navbar_backArrow}
                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 257.57 451.85"><g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><path d="M0,225.92a31.56,31.56,0,0,1,9.26-22.37L203.55,9.27A31.64,31.64,0,0,1,248.3,54L76.39,225.92l171.9,171.91a31.64,31.64,0,0,1-44.75,44.74L9.26,248.29A31.52,31.52,0,0,1,0,225.92Z" /></g></g></svg>
 
@@ -85,58 +134,33 @@ export default function MapPopup({ onBack }: { onBack: () => void }) {
                     </h3>
 
 
+                    <svg
+
+                        onClick={() => {
+                            data.onBack()
+                            data.onChangeLocation(latLng)
+                        }}
+                        className={Style.mapPopup_wrapper_navbar_save}
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 483.89 356.14"><g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><path d="M9.89,218.34,137.51,346.2a33.83,33.83,0,0,0,47.86,0L474,57.92a33.84,33.84,0,0,0-.15-48l-.15-.14A33.84,33.84,0,0,0,426,9.9L185.35,250.26a33.84,33.84,0,0,1-47.84,0L57.77,170.51a33.84,33.84,0,0,0-47.94.08h0A33.84,33.84,0,0,0,9.89,218.34Z" /></g></g></svg>
+
+                    {/* <svg
+                        onClick={data.onBack}
+                        className={Style.mapPopup_wrapper_navbar_back}
+
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 405.27 294.9"><g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><path d="M393.4,69.24,179.6,283a40.56,40.56,0,0,1-57.36,0L11.88,172.65a40.56,40.56,0,0,1,57.35-57.37l81.7,81.7L336,11.88A40.56,40.56,0,1,1,393.4,69.24Z" /></g></g></svg> */}
+
+
+
                 </div>
 
                 <div className={Style.mapPopup_wrapper_navbar_map}>
 
-                    {
-                        !isLoaded
-                            ? <></>
-                            : (
-                                <GoogleMap
-                                    options={{
-                                        disableDefaultUI: true,
-                                        zoom: 4,
-                                        center: {
-                                            lat: info.lat,
-                                            lng: info.lng,
-                                        }
-                                    }}
-                                    onClick={map => {
-                                        console.log(map);
-                                        const lat = map.latLng.lat()
-                                        const lng = map.latLng.lng()
-                                        setInfo({ lng, lat })
-                                        console.log(lat)
-                                    }}
+                    <div style={{
+                        height: '100%',
+                        width: '100%'
+                    }} id="map">
 
-                                    mapContainerStyle={{
-                                        height: '100%',
-                                        width: '100%',
-                                    }}
-                                    zoom={4}
-                                    // @ts-ignore
-                                    defaultCenter={{ lat: -34.397, lng: 150.644 }}
-                                    center={{
-                                        lat: info.lat,
-                                        lng: info.lng
-                                    }}
-                                    onLoad={onLoad}
-                                    onUnmount={onUnmount}
-                                >
-                                    { /* Child components, such as markers, info windows, etc. */}
-                                    <></>
-                                    <Marker
-                                        // @ts-ignore
-                                        // animation={google.maps.Animation.DROP}
-                                        position={{
-                                            lat: info.lat,
-                                            lng: info.lng,
-                                        }}
-                                    />
-                                </GoogleMap>
-                            )
-                    }
+                    </div>
 
 
                     <div
