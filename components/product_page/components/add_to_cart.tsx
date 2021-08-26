@@ -21,9 +21,6 @@ export default function AddToCart(data: ProductPayloadI) {
 
         products.forEach((e) => {
 
-
-
-
             tempLocalPrice += +(new Decimal(e.qty).mul(e.price))
 
             console.log(`Add to cart: tempLocalPrice - ${tempLocalPrice}:  `);
@@ -32,7 +29,6 @@ export default function AddToCart(data: ProductPayloadI) {
         const totalPriceAction: TotalPriceActionI = {
             payload: {
                 value: tempLocalPrice
-                // value: +(new Decimal(tempLocalPrice).add(totalPriceState.value ?? 0))
             },
             type: TypeTotalPriceAction.UPDATE
         }
