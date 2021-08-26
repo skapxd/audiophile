@@ -42,29 +42,37 @@ const CustomField = (data: CustomFieldI) => {
     )
 }
 
+// function getLocation() {
+
+// }
+const AnyReactComponent = (data) => <div>{data}</div>;
+
 export default function Checkout() {
 
     const [form, setForm] = useState({
         name: '',
         email: '',
         phone: '',
-        location: ''
+        location: {
+            lat: 0,
+            lng: 0,
+        }
     });
 
     const [showMap, setShowMap] = useState(false);
 
     return (
 
-
         <div>
-
-
             {
                 !showMap
                     ? <> </>
                     : <div className={Style.mapPopup}>
 
-                        <div className={Style.mapPopup_bg}></div>
+                        <div
+                            className={Style.mapPopup_bg}
+                            onClick={() => { setShowMap(false) }}
+                        ></div>
 
                         <div className={Style.mapPopup_wrapper}>
 
@@ -86,21 +94,62 @@ export default function Checkout() {
 
                                 <GoogleMapReact
                                     bootstrapURLKeys={{ key: 'AIzaSyD-t57DZ8464VkpcD6CswgL_kOO1XpE4Iw' }}
+                                    options={
+                                        {
+                                            disableDefaultUI: true,
+                                            // panControl: false,
+                                            // mapTypeControl: false,
+                                            // scrollwheel: false,
+                                            // styles: [{ stylers: [{ 'saturation': -100 }, { 'gamma': 0.8 }, { 'lightness': 4 }, { 'visibility': 'on' }] }]
+                                        }
+                                    }
                                     defaultCenter={{
-                                        lat: 59.95,
-                                        lng: 30.33
+                                        lat: form.location.lat,
+                                        lng: form.location.lng
                                     }}
                                     defaultZoom={1}
                                 >
+
+                                    {/* <AnyReactComponent
+                                        // lat={59.955413}
+                                        // lng={30.337844}
+                                        text="My Marker"
+                                    /> */}
                                 </GoogleMapReact>
 
+
+                                <div
+
+                                    onClick={() => {
+                                        if (navigator.geolocation) {
+                                            navigator.geolocation.getCurrentPosition((position) => {
+                                                console.log(position);
+                                                setForm((s) => ({
+                                                    ...s,
+                                                    location: {
+                                                        lat: position.coords.latitude,
+                                                        lng: position.coords.longitude,
+                                                    }
+                                                    // location: `lat: ${position.coords.latitude} - lng: ${position.coords.longitude}`
+                                                }))
+
+                                            })
+                                        }
+                                    }}
+                                    className={Style.mapPopup_wrapper_navbar_map_buttonLocation}>
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 274.65 395.71">
+                                        <g id="Capa_2" data-name="Capa 2">
+                                            <g id="Capa_1-2" data-name="Capa 1">
+                                                <path d="M137.32,0C61.6,0,0,61.61,0,137.33c0,72.89,124.59,243.18,129.9,250.39l4.95,6.73a3.06,3.06,0,0,0,5,0l4.95-6.73c5.31-7.21,129.9-177.5,129.9-250.39C274.65,61.61,213,0,137.32,0Zm0,88.14a49.19,49.19,0,1,1-49.19,49.19A49.24,49.24,0,0,1,137.32,88.14Z" />
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </div>
+
                             </div>
-
-
                         </div>
-
                     </div>
-
             }
 
 
@@ -156,7 +205,7 @@ export default function Checkout() {
                             name='location'
                             placeholder='click to open map'
                             disable={true}
-                            value={form.location}
+                            value={form.location.lat === 0 ? '' : `lat: ${form.location.lat} - lng: ${form.location.lng}`}
                             onChange={(value) => { }}
                             onClick={() => {
                                 setShowMap(true)

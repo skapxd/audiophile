@@ -7,6 +7,7 @@ import { TotalPriceActionI, TypeTotalPriceAction } from "../../bloc/reducers/tot
 import Item from "./items/item";
 import TotalPrice from "./total_price/total_price";
 import Style from "./popup_cart.module.sass";
+import Link from 'next/link';
 
 
 export default function PopupCart() {
@@ -102,12 +103,13 @@ export default function PopupCart() {
 
 
                         <TotalPrice />
-
-                        <button>
+                        
+                        <Link href='/checkout'>
+                            <a className={Style.button}>
                             checkout
-                        </button>
 
-
+                            </a>
+                        </Link>
 
                     </div>
                 </div>
