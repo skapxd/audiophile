@@ -1,5 +1,4 @@
-// @import '../../styles/_theme'
-@import '../../styles/_theme'
+@import '../../../styles/_theme'
 
 @mixin stringWithinField
     font-style: normal
@@ -18,7 +17,6 @@
     justify-content: space-between
 
     height: 8rem
-    max-width: 28rem
     width: 100%
 
     &_name
@@ -42,3 +40,7 @@
         &::placeholder
             @include stringWithinField
             opacity: 0.4
+
+// Tablet
+@media (min-width: 768px)
+

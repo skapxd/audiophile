@@ -14,11 +14,9 @@ export default function CustomField(data: CustomFieldI) {
 
     return (
         <div
-
             onClick={() => { data.onClick && data.onClick() }}
             className={Style.customFieldContainer}
         >
-
             <div className={Style.customFieldContainer_name}>
                 {data.name}
             </div>
