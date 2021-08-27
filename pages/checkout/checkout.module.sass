@@ -12,6 +12,9 @@
     gap: 3rem
 
     
+    // &_checkout 
+    // &_summary 
+
     &_form
         padding: 2rem 3rem
         background: $white
@@ -189,12 +192,7 @@
 @media (min-width: 600px)
     
     .bg
-        // @include padding_desktop_and_tablet
-        // padding-top: 4rem
-        // padding-bottom: 4rem
-
         &_form
-
             &_groupFields
                 flex-wrap: wrap
                 flex-direction: row
@@ -202,3 +200,17 @@
                 &_customField
                     flex: 1
                     min-width: 20rem
+
+// Desktop
+@media (min-width: 1190px)
+    .bg
+        margin: 0
+        // max-width: 111rem
+        justify-content: center 
+        flex-direction: row
+
+        &_checkout 
+            width: 75rem
+
+        &_summary
+            width: 35rem

@@ -77,7 +77,7 @@ export default function MapPopup(data: MapPopupI) {
 
 
     const success = (position: GeolocationPosition) => {
-        const pos = {
+        latLng = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
         };
@@ -86,7 +86,7 @@ export default function MapPopup(data: MapPopupI) {
         })
 
         const marker = new google.maps.Marker({
-            position: pos,
+            position: latLng,
             map
         })
 
@@ -94,7 +94,7 @@ export default function MapPopup(data: MapPopupI) {
         // infoWindow.setPosition(pos);
         // infoWindow.setContent("Location found.");
         infoWindow.open(map);
-        map.setCenter(pos);
+        map.setCenter(latLng);
     }
 
     const locationHandler = () => {
