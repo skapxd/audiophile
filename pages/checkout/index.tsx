@@ -153,23 +153,32 @@ export default function Checkout() {
                     </div>
 
 
-                    <form method="post" action='https://checkout.payulatam.com/ppp-web-gateway-payu'>
-                        <input name="merchantId" type="hidden" value="947663" />
-                        <input name="accountId" type="hidden" value="955233" />
-                        <input name="description" type="hidden" value="Test PAYU" />
-                        <input name="referenceCode" type="hidden" value="TestPayUasdsdafsdgafdgsdfgdfg" />
-                        <input name="amount" type="hidden" value="20000" />
-                        <input name="tax" type="hidden" value="3193" />
-                        <input name="taxReturnBase" type="hidden" value="16806" />
-                        <input name="currency" type="hidden" value="COP" />
-                        <input name="signature" type="hidden" value="bb84322812310dafb1e208202b5dbe8660f7dea7" />
-                        <input name="test" type="hidden" value="0" />
-                        <input name="buyerEmail" type="hidden" value="test@test.com" />
-                        <input name="responseUrl" type="hidden" value="http://www.test.com/response" />
-                        <input name="confirmationUrl" type="hidden" value="http://www.test.com/confirmation" />
-                        <input name="Submit" type="submit" value="Enviar" />
-                    </ form>
+                    <form method="POST" action='https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/'>
 
+                        <input name="merchantId" type="hidden" value="508029" />
+                        <input name="accountId" type="hidden" value="512321" />
+
+                        <input name="description" type="hidden" value="Test PAYU" />
+
+                        <input name="referenceCode" type="hidden" value="14559164859246550000" />
+                        <input name="amount" type="hidden" value="20000" />
+
+                        <input name="tax" type="hidden" value="0" />
+                        <input name="taxReturnBase" type="hidden" value="0" />
+
+                        <input name="currency" type="hidden" value="COP" />
+                        <input name="signature" type="hidden" value="021f789c956acf47fc959fd2a79e3481" />
+
+                        <input name="test" type="hidden" value="0" />
+
+                        <input name="buyerEmail" type="hidden" value="hbiaser132@gmail.com" />
+
+                        <input name="responseUrl" type="hidden" value="https://google.com" />
+                        <input name="confirmationUrl" type="hidden" value="https://ecommerce-est.herokuapp.com/api/payu" />
+
+
+                        <input name="Submit" type="submit" value="Enviar" />
+                    </form>
 
                 </div>
 
