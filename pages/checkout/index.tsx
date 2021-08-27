@@ -33,6 +33,8 @@ export default function Checkout() {
         }
     });
 
+
+
     const [showMap, setShowMap] = useState(false);
 
     useEffect(() => {
@@ -149,6 +151,25 @@ export default function Checkout() {
 
                         </div>
                     </div>
+
+
+                    <form method="post" action='https://checkout.payulatam.com/ppp-web-gateway-payu'>
+                        <input name="merchantId" type="hidden" value="947663" />
+                        <input name="accountId" type="hidden" value="955233" />
+                        <input name="description" type="hidden" value="Test PAYU" />
+                        <input name="referenceCode" type="hidden" value="TestPayU" />
+                        <input name="amount" type="hidden" value="20000" />
+                        <input name="tax" type="hidden" value="3193" />
+                        <input name="taxReturnBase" type="hidden" value="16806" />
+                        <input name="currency" type="hidden" value="COP" />
+                        <input name="signature" type="hidden" value="7ee7cf808ce6a39b17481c54f2c57acc" />
+                        <input name="test" type="hidden" value="0" />
+                        <input name="buyerEmail" type="hidden" value="test@test.com" />
+                        <input name="responseUrl" type="hidden" value="http://www.test.com/response" />
+                        <input name="confirmationUrl" type="hidden" value="http://www.test.com/confirmation" />
+                        <input name="Submit" type="submit" value="Enviar" />
+                    </ form>
+
 
                 </div>
 

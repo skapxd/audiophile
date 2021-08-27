@@ -1,6 +1,5 @@
 @import '../../styles/_theme'
 
-
 .bg
     @include padding_movil
     padding-top: 2rem
@@ -10,10 +9,6 @@
     flex-direction: column
     background: $category_card_bg
     gap: 3rem
-
-    
-    // &_checkout 
-    // &_summary 
 
     &_form
         padding: 2rem 3rem
@@ -36,7 +31,6 @@
 
             color: $dark_bg
 
-
         &_pageSubtitle
             font-style: normal
             font-weight: bold
@@ -47,7 +41,6 @@
             text-transform: uppercase
 
             color: $dark_bg
-
 
         &_formTitle
             font-style: normal
@@ -60,12 +53,10 @@
 
             color: $orange
 
-
         &_groupFields
             display: flex
             flex-direction: column
             grid-gap: 2rem
-
 
         &_summaryItem
             display: flex
@@ -114,7 +105,7 @@
 
                     mix-blend-mode: normal
                     opacity: 0.5
-                
+
             &_qty
                 margin-left: auto
 
@@ -129,7 +120,6 @@
 
                 mix-blend-mode: normal
                 opacity: 0.5
-
 
         &_resume
             display: flex
@@ -148,7 +138,6 @@
                 opacity: 0.5
 
                 text-transform: uppercase
-                
 
             &_values,
             &_grandTotal
@@ -161,16 +150,16 @@
                 text-transform: uppercase
 
                 color: $dark_bg
-            
+
             &_grandTotal
                 color: $orange
-        
+
             &_buttonPay
                 width: 100%
                 // max-width: 28rem
                 background: $orange
                 transition: background 0.3s ease
-                padding: 1.5rem 0 
+                padding: 1.5rem 0
 
                 text-transform: uppercase
                 text-align: center
@@ -180,17 +169,14 @@
                 font-weight: bold
                 font-size: 1.3rem
                 line-height: 1.8rem
- 
+
                 text-align: center
                 letter-spacing: .1rem
                 text-transform: uppercase
 
-
-
-
 // Tablet
 @media (min-width: 600px)
-    
+
     .bg
         &_form
             &_groupFields
@@ -205,11 +191,11 @@
 @media (min-width: 1190px)
     .bg
         margin: 0
-        // max-width: 111rem
-        justify-content: center 
+        min-height: calc( 100vh - 44.3rem )  
+        justify-content: center
         flex-direction: row
 
-        &_checkout 
+        &_checkout
             width: 75rem
 
         &_summary
