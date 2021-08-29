@@ -1,16 +1,17 @@
-import useCounter from "../../../hooks/counter_hook";
-import { ProductActionI, ProductPayloadI, TypeProductAction } from "../../../bloc/reducers/product_reducer";
-import Style from "./item.module.sass";
+import { ProductActionI, ProductPayloadI, TypeProductAction } from '../../../bloc/reducers/product_reducer';
 import { CustomContextApp } from "../../../bloc/custom_context_app";
 import { useContext, useEffect } from "react";
 import { TotalPriceActionI, TypeTotalPriceAction } from "../../../bloc/reducers/total_price";
+
+import Style from "./item.module.sass";
 
 interface Item extends ProductPayloadI {
     index: number
 }
 
 
-export default function Item(data: Item,) {
+export default function Item(data: Item) {
+
 
     const {
         setTotalPrice,
@@ -20,6 +21,20 @@ export default function Item(data: Item,) {
         setProduct,
 
     } = useContext(CustomContextApp);
+
+
+    useEffect(() => {
+        // Delete a product where qty is cero
+        if (data.qty === 0) {
+            const action: ProductActionI = {
+                type: TypeProductAction.REMOVE_PRODUCT,
+                payload: data
+            }
+            setProduct(action)
+        }
+        
+    }, [data.qty]);
+
 
     const subtractCounterHandler = () => {
 
@@ -45,6 +60,8 @@ export default function Item(data: Item,) {
 
             setProduct(productAction)
         }
+
+
     }
 
     const addCounterHandler = () => {
@@ -105,7 +122,7 @@ export default function Item(data: Item,) {
                 </button>
 
                 <div className={Style.container_qty_text}>
-                    {productState.products[data.index].qty}
+                    {data.qty}
                 </div>
 
 

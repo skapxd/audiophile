@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import Link from 'next/link';
-
+import { useContext, useState } from "react";
+import { useRouter } from "next/router";
 import { CustomContextApp } from '../../bloc/custom_context_app';
 
 import CustomField from "../../components/checkout/custom_field/custom_field";
@@ -8,22 +7,23 @@ import MapPopup from "../../components/checkout/map_popup/map_popup";
 
 import Style from "./checkout.module.sass";
 
+import { CreatePreferencePayload, PreferenceItem } from 'mercadopago/models/preferences/create-payload.model';
+import { Environments } from "../../env/enviroments";
+import { PreferenceCreateResponse } from "mercadopago/resources/preferences";
+import { compareObject } from "../../utils/compare_objects";
+import Decimal from "decimal.js-light";
+
 
 export default function Checkout() {
 
-    let map: JSX.Element = <MapPopup
-        onBack={() => { setShowMap(false) }}
-        onChangeLocation={(latLng) => {
-            setForm((s) => ({
-                ...s,
-                latLng
-            }))
-        }}
-    />;
-
     const { productState, totalPriceState } = useContext(CustomContextApp);
 
+    const router = useRouter()
+
     const [form, setForm] = useState({
+
+        ifPhoneValid: false,
+        ifEmailValid: false,
         name: '',
         email: '',
         phone: '',
@@ -33,28 +33,84 @@ export default function Checkout() {
         }
     });
 
+    const handlerPayment = async () => {
 
+        const items: PreferenceItem[] = productState.products.map((e) => {
+
+
+
+            const item: PreferenceItem = {
+                id: e.id.toString(),
+                category_id: 'e',
+                currency_id: 'COP',
+                description: 'qeq',
+                picture_url: e.img,
+                title: e.name,
+                quantity: e.qty,
+                unit_price: +(new Decimal(e.price).mul(1.19).toFixed(3)).toString().replace('.', '')
+            }
+            return item
+        })
+
+
+        const [area_code, ...listNumber] = form.phone.split(' ')
+
+        const number = +listNumber.join('')
+
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = {
+            items,
+            "payer": {
+                "name": form.name,
+                "email": form.email,
+                "phone": {
+                    "area_code": `${area_code}`,
+                    "number": number
+                }
+            },
+            "back_urls": {
+                "success": `${Environments.interface.hostname}/success`,
+                "failure": `${Environments.interface.hostname}/failure`,
+                "pending": `${Environments.interface.hostname}/pending`
+            },
+            "auto_return": "approved",
+            "notification_url": `${Environments.interface.hostname}/api/mercado_pago/notification`,
+            "statement_descriptor": "audiophile",
+            "expires": true
+        }
+        const postBody = JSON.stringify(raw)
+
+
+        const requestOptions: RequestInit = {
+            method: 'POST',
+            headers: myHeaders,
+            body: postBody,
+            redirect: 'follow'
+        };
+
+        try {
+
+            const resp = await fetch(`${Environments.interface.hostname}/api/mercado_pago`, requestOptions)
+            const data = await resp.json()
+
+            const client = {
+                width: document.documentElement.clientWidth,
+                height: document.documentElement.clientHeight
+            }
+            window.open(data.sandbox_init_point, '', `resizable=no,toolbar=no,scrollbars=yes,height=${client.height},width=${client.width},top=145,left=235`);
+            // window.open(data.sandbox_init_point, 'mywindow', 'resizable=no,toolbar=no,scrollbars=yes,height=450,width=530,top=145,left=235');
+
+            // window.open(data.sandbox_init_point, "_blank");
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
 
     const [showMap, setShowMap] = useState(false);
-
-    useEffect(() => {
-
-        console.log('hola')
-        map = (
-            <MapPopup
-                onBack={() => { setShowMap(false) }}
-                onChangeLocation={(latLng) => {
-                    setForm((s) => ({
-                        ...s,
-                        latLng
-                    }))
-                }}
-            />
-        )
-        // return () => {
-        //     cleanup
-        // };
-    }, [form.latLng]);
 
     return (
 
@@ -62,7 +118,15 @@ export default function Checkout() {
             {
                 !showMap
                     ? <> </>
-                    : map
+                    : <MapPopup
+                        onBack={() => { setShowMap(false) }}
+                        onChangeLocation={(latLng) => {
+                            setForm((s) => ({
+                                ...s,
+                                latLng
+                            }))
+                        }}
+                    />
             }
 
 
@@ -87,7 +151,7 @@ export default function Checkout() {
                                 className={Style.bg_form_groupFields_customField}
                             >
                                 <CustomField
-
+                                    type='text'
                                     name='name'
                                     placeholder='franken luna'
                                     value={form.name}
@@ -104,10 +168,12 @@ export default function Checkout() {
                                 className={Style.bg_form_groupFields_customField}
                             >
                                 <CustomField
+                                    type='email'
+                                    pattern='^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$'
                                     name='email address'
                                     placeholder='franken@luna.com'
                                     value={form.email}
-                                    onChange={(value) => {
+                                    onChange={(value, isValid) => {
                                         setForm((s) => ({
                                             ...s,
                                             email: value
@@ -121,13 +187,16 @@ export default function Checkout() {
                                 className={Style.bg_form_groupFields_customField}
                             >
                                 <CustomField
+                                    pattern='\+[0-9 ]+'
+                                    type='phone'
                                     name='phone number'
-                                    placeholder='300 000 0000'
+                                    placeholder='+57 300 000 0000'
                                     value={form.phone}
-                                    onChange={(value) => {
+                                    onChange={(value, isValid) => {
                                         setForm((s) => ({
                                             ...s,
-                                            phone: value
+                                            phone: value,
+                                            ifPhoneValid: value.length === 0 ? false : isValid,
                                         }))
                                     }}
                                 />
@@ -138,9 +207,10 @@ export default function Checkout() {
                                 className={Style.bg_form_groupFields_customField}
                             >
                                 <CustomField
+                                    type='text'
+                                    autocomplete='off'
                                     name='location'
                                     placeholder='click to open map'
-                                    disable={true}
                                     value={form.latLng.lat === 0 ? '' : `lat: ${form.latLng.lat} - lng: ${form.latLng.lng}`}
                                     onChange={(value) => { }}
                                     onClick={() => {
@@ -152,33 +222,6 @@ export default function Checkout() {
                         </div>
                     </div>
 
-
-                    <form method="POST" action='https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/'>
-
-                        <input name="merchantId" type="hidden" value="508029" />
-                        <input name="accountId" type="hidden" value="512321" />
-
-                        <input name="description" type="hidden" value="Test PAYU" />
-
-                        <input name="referenceCode" type="hidden" value="14559164859246550000" />
-                        <input name="amount" type="hidden" value="20000" />
-
-                        <input name="tax" type="hidden" value="0" />
-                        <input name="taxReturnBase" type="hidden" value="0" />
-
-                        <input name="currency" type="hidden" value="COP" />
-                        <input name="signature" type="hidden" value="021f789c956acf47fc959fd2a79e3481" />
-
-                        <input name="test" type="hidden" value="0" />
-
-                        <input name="buyerEmail" type="hidden" value="hbiaser132@gmail.com" />
-
-                        <input name="responseUrl" type="hidden" value="https://google.com" />
-                        <input name="confirmationUrl" type="hidden" value="https://ecommerce-est.herokuapp.com/api/payu" />
-
-
-                        <input name="Submit" type="submit" value="Enviar" />
-                    </form>
 
                 </div>
 
@@ -244,7 +287,7 @@ export default function Checkout() {
                             </h5>
 
                             <h5 className={Style.bg_form_resume_values}>
-                                $ {+totalPriceState.value}
+                                $ {+totalPriceState.value.toFixed(3)}
                             </h5>
                         </div>
 
@@ -252,7 +295,7 @@ export default function Checkout() {
                             <h5 className={Style.bg_form_resume_title}>
                                 Tax
                             </h5>
-
+                            {console.log(process.env)}
                             <h5 className={Style.bg_form_resume_values}>
                                 $ {+(totalPriceState.value * 0.19).toFixed(3)}
                             </h5>
@@ -268,12 +311,19 @@ export default function Checkout() {
                                 $ {+(totalPriceState.value * 1.19).toFixed(3)}
                             </h5>
                         </div>
-
-                        <Link href='/pay'>
-                            <a className={Style.bg_form_resume_buttonPay}>
-                                continue & pay
-                            </a >
-                        </Link>
+                        <button
+                            onClick={handlerPayment}
+                            className={
+                                form.ifPhoneValid
+                                    && totalPriceState.value !== 0
+                                    && form.name !== ''
+                                    && form.email !== ''
+                                    && !compareObject({ object1: form.latLng, object2: { lat: 0, lng: 0, } })
+                                    ? Style.bg_form_resume_buttonPay
+                                    : Style.bg_form_resume_buttonPay_disabled
+                            }>
+                            continue & pay
+                        </button >
                     </div>
 
                 </div>
@@ -282,3 +332,4 @@ export default function Checkout() {
         </div>
     )
 }
+

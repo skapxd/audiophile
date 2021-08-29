@@ -51,9 +51,6 @@ export default function totalPriceReducer(state: TotalPricePayloadI, action: Tot
 
         case TypeTotalPriceAction.UPDATE:
 
-            console.log('TypeTotalPriceAction.UPDATE')
-            console.log(action.payload.value)
-
             return {
                 value: action.payload.value
             }

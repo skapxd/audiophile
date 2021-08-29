@@ -26,69 +26,81 @@ export interface ProductActionI {
 
 export default function productReducer(state: ListOfProductPayloadI, action: ProductActionI): ListOfProductPayloadI {
 
-    switch (action.type) {
-        // -------------------
-        case TypeProductAction.ADD_PRODUCT:
+    if (action.type === TypeProductAction.ADD_PRODUCT) {
 
-            let ifProductExist = false
-            let newProduct = action.payload
+        let ifProductExist = false
+        let newProduct = action.payload
 
-            // En caso de que sea el primer producto, no ejecuta el if
-            if (state.products) {
+        // En caso de que sea el primer producto, no ejecuta el if
+        if (state.products) {
 
-                state.products.forEach((e) => {
+            state.products.forEach((e) => {
 
-                    if (e.id === newProduct.id) {
-                        ifProductExist = true
-                    }
-
-                });
-            }
-
-            let newState: ListOfProductPayloadI = {
-                products: [...(state.products || [])]
-            }
-
-            // En caso de que el producto no exista, se añadirá 
-            if (!ifProductExist) {
-
-                newState = {
-                    products: [
-                        ...(state.products || []),
-                        newProduct
-                    ],
-                };
-
-            }
-
-            // En caso de que el producto exista, se actualizara
-            if (ifProductExist) {
-
-                const listTemp = state.products.map((e) => {
-
-                    if (e.id === newProduct.id) {
-                        return newProduct
-                    }
-
-                    return e
-                });
-
-                newState = {
-                    products: listTemp
+                if (e.id === newProduct.id) {
+                    ifProductExist = true
                 }
+
+            });
+        }
+
+        let newState: ListOfProductPayloadI = {
+            products: [...(state.products || [])]
+        }
+
+        // En caso de que el producto no exista, se añadirá 
+        if (!ifProductExist) {
+
+            newState = {
+                products: [
+                    ...(state.products || []),
+                    newProduct
+                ],
+            };
+
+        }
+
+        // En caso de que el producto exista, se actualizara
+        if (ifProductExist) {
+
+            const listTemp = state.products.map((e) => {
+
+                if (e.id === newProduct.id) {
+                    return newProduct
+                }
+
+                return e
+            });
+
+            newState = {
+                products: listTemp
             }
+        }
 
-            return newState
+        return newState
 
-        // -------------------
-        case TypeProductAction.REMOVE_ALL_PRODUCT:
+    }
 
-            return {
-                products: []
+
+    if (action.type === TypeProductAction.REMOVE_PRODUCT) {
+
+        const productToDelete = action.payload
+
+        const newState = state.products.filter((e) => {
+
+            if (e.id === productToDelete.id) {
+                return
             }
+            return e
+        })
 
-        // -------------------
-        default:
-            return { ...state }
+        return {
+            products: newState,
+        }
+    }
+
+    if (action.type === TypeProductAction.REMOVE_ALL_PRODUCT) {
+        return {
+            products: []
+        }
     }
 }

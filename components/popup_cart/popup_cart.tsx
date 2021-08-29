@@ -11,7 +11,6 @@ import Link from 'next/link';
 
 
 export default function PopupCart() {
-    const context = useContext(CustomContextApp);
 
     const {
         productState,
@@ -21,6 +20,7 @@ export default function PopupCart() {
         setPopup,
 
         setTotalPrice
+        
     } = useContext(CustomContextApp);
 
     const [ifShowPopupCart, setIfShowPopupCart] = useState(popupState);
@@ -59,8 +59,6 @@ export default function PopupCart() {
             <div className={Style.container}>
 
                 <div className={Style.container_bg} onClick={bgHandler}>
-
-
                 </div>
 
                 <div className={Style.container_relative}>
@@ -70,7 +68,7 @@ export default function PopupCart() {
 
                         <div className={Style.container_wrapper_row}>
                             <div className={Style.container_wrapper_row_cart_qty}>
-                                CART (3)
+                                CART ({productState?.products?.length ?? 0})
                             </div>
 
 
@@ -84,7 +82,7 @@ export default function PopupCart() {
 
                         <div className={Style.container_wrapper_column}>
 
-                            {products.map(({ name, qty, price, img, id }, i ) => {
+                            {products?.map(({ name, qty, price, img, id }, i) => {
 
                                 const random = Math.random()
                                 return (
@@ -103,10 +101,10 @@ export default function PopupCart() {
 
 
                         <TotalPrice />
-                        
+
                         <Link href='/checkout'>
                             <a className={Style.button}>
-                            checkout
+                                checkout
 
                             </a>
                         </Link>

@@ -154,9 +154,9 @@
             &_grandTotal
                 color: $orange
 
-            &_buttonPay
+            &_buttonPay,
+            &_buttonPay_disabled
                 width: 100%
-                // max-width: 28rem
                 background: $orange
                 transition: background 0.3s ease
                 padding: 1.5rem 0
@@ -173,6 +173,17 @@
                 text-align: center
                 letter-spacing: .1rem
                 text-transform: uppercase
+                transition: background 0.3s ease 
+
+                &:hover
+                    background: $orange-act
+
+            &_buttonPay_disabled
+                background: #0004
+
+                &:hover
+                    background: #0004
+            
 
 // Tablet
 @media (min-width: 600px)

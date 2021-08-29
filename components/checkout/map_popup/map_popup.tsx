@@ -91,8 +91,6 @@ export default function MapPopup(data: MapPopupI) {
         })
 
         markers.push(marker)
-        // infoWindow.setPosition(pos);
-        // infoWindow.setContent("Location found.");
         infoWindow.open(map);
         map.setCenter(latLng);
     }
@@ -105,7 +103,6 @@ export default function MapPopup(data: MapPopupI) {
                 () => { },
                 { enableHighAccuracy: true, maximumAge: 10000 }
             )
-
         }
     }
 
@@ -117,7 +114,10 @@ export default function MapPopup(data: MapPopupI) {
 
             <div
                 className={Style.mapPopup_bg}
-                onClick={data.onBack}
+                onClick={() => {
+                    data.onBack()
+                    data.onChangeLocation(latLng)
+                }}
             ></div>
 
             <div className={Style.mapPopup_wrapper}>
@@ -125,7 +125,10 @@ export default function MapPopup(data: MapPopupI) {
                 <div className={Style.mapPopup_wrapper_navbar}>
 
                     <svg
-                        onClick={data.onBack}
+                        onClick={() => {
+                            data.onBack()
+                            data.onChangeLocation(latLng)
+                        }}
                         className={Style.mapPopup_wrapper_navbar_backArrow}
                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 257.57 451.85"><g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><path d="M0,225.92a31.56,31.56,0,0,1,9.26-22.37L203.55,9.27A31.64,31.64,0,0,1,248.3,54L76.39,225.92l171.9,171.91a31.64,31.64,0,0,1-44.75,44.74L9.26,248.29A31.52,31.52,0,0,1,0,225.92Z" /></g></g></svg>
 
@@ -142,14 +145,6 @@ export default function MapPopup(data: MapPopupI) {
                         }}
                         className={Style.mapPopup_wrapper_navbar_save}
                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 483.89 356.14"><g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><path d="M9.89,218.34,137.51,346.2a33.83,33.83,0,0,0,47.86,0L474,57.92a33.84,33.84,0,0,0-.15-48l-.15-.14A33.84,33.84,0,0,0,426,9.9L185.35,250.26a33.84,33.84,0,0,1-47.84,0L57.77,170.51a33.84,33.84,0,0,0-47.94.08h0A33.84,33.84,0,0,0,9.89,218.34Z" /></g></g></svg>
-
-                    {/* <svg
-                        onClick={data.onBack}
-                        className={Style.mapPopup_wrapper_navbar_back}
-
-                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 405.27 294.9"><g id="Capa_2" data-name="Capa 2"><g id="Capa_1-2" data-name="Capa 1"><path d="M393.4,69.24,179.6,283a40.56,40.56,0,0,1-57.36,0L11.88,172.65a40.56,40.56,0,0,1,57.35-57.37l81.7,81.7L336,11.88A40.56,40.56,0,1,1,393.4,69.24Z" /></g></g></svg> */}
-
-
 
                 </div>
 
