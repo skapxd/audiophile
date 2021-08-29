@@ -313,7 +313,16 @@ export default function Checkout() {
                             </h5>
                         </div>
                         <button
-                            onClick={handlerPayment}
+                            onClick={() => {
+                                form.ifPhoneValid
+                                    && totalPriceState.value !== 0
+                                    && form.name !== ''
+                                    && form.email !== ''
+                                    && !compareObject({ object1: form.latLng, object2: { lat: 0, lng: 0, } })
+                                    ? handlerPayment()
+                                    : undefined
+                            }}
+                            
                             className={
                                 form.ifPhoneValid
                                     && totalPriceState.value !== 0
@@ -326,6 +335,11 @@ export default function Checkout() {
                             continue & pay
                         </button >
                     </div>
+
+                    <img
+                        className={Style.credit_cart}
+                        src="/brand/credit_cart.svg" alt=""
+                    />
 
                 </div>
 

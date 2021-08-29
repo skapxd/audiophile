@@ -6,6 +6,4 @@ export class Environments {
     public static interface: EnvironmentI = process.env.NODE_ENV === 'production'
     ? new ProdEnv()
     : new DevEnv()
-    // public static interface: EnvironmentI = new ProdEnv()
-    // public static interface: EnvironmentI = new DevEnv()
 }
