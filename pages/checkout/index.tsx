@@ -100,10 +100,12 @@ export default function Checkout() {
                 width: document.documentElement.clientWidth,
                 height: document.documentElement.clientHeight
             }
-            window.open(data.sandbox_init_point, '', `resizable=no,toolbar=no,scrollbars=yes,height=${client.height},width=${client.width},top=145,left=235`);
-            // window.open(data.sandbox_init_point, 'mywindow', 'resizable=no,toolbar=no,scrollbars=yes,height=450,width=530,top=145,left=235');
+            window.open(
+                data[Environments.interface.openLinkToPayMercadoPago],
+                '',
+                `resizable=no,toolbar=no,scrollbars=yes,height=${client.height},width=${client.width},top=145,left=235`
+            );
 
-            // window.open(data.sandbox_init_point, "_blank");
         } catch (error) {
             console.log(error)
         }
@@ -295,7 +297,6 @@ export default function Checkout() {
                             <h5 className={Style.bg_form_resume_title}>
                                 Tax
                             </h5>
-                            {console.log(process.env)}
                             <h5 className={Style.bg_form_resume_values}>
                                 $ {+(totalPriceState.value * 0.19).toFixed(3)}
                             </h5>
